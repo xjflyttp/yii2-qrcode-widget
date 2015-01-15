@@ -1,17 +1,17 @@
-yii2-uploadify-widget
+yii2-qrcode-widget
 =====================
 
 composer.json
 -----
 ```json
 "require": {
-        "xj/yii2-uploadify-widget": "*"
+    "xj/yii2-qrcode-widget": "*"
 },
 ```
 
 example:
 -----
-WidgetÖ±½ÓÉú³ÉQR
+Widgetç›´æŽ¥ç”ŸæˆQR
 -----
 ```php
 use xj\qrcode\QRcode;
@@ -19,7 +19,7 @@ use xj\qrcode\widgets\Text;
 use xj\qrcode\widgets\Email;
 use xj\qrcode\widgets\Card;
 
-//WidgetÖ±½ÓÉú³ÉQR
+//Widgetç›´æŽ¥ç”ŸæˆQR
 Text::widget([
     'outputDir' => '@webroot/upload/qrcode',
     'outputDirWeb' => '@web/upload/qrcode',
@@ -28,7 +28,7 @@ Text::widget([
     'size' => 6,
 ]);
 
-//WidgetÍ¨¹ýActionÉú³ÉQR
+//Widgeté€šè¿‡Actionç”ŸæˆQR
 Text::widget([
     'text' => 'aaaa@gmail.com',
     'size' => 3,
@@ -36,14 +36,14 @@ Text::widget([
     'ecLevel' => QRcode::QR_ECLEVEL_L,
 ]);
 
-//Éú³ÉÒ»¸öEMAIL¶þÎ¬Âë
+//ç”Ÿæˆä¸€ä¸ªEMAILäºŒç»´ç 
 Email::widget([
     'email' => 'aaaa@gmail.com',
     'subject' => 'myMail',
     'body' => 'do something',
 ]);
 
-//ÃûÆ¬
+//åç‰‡
 Card::widget([
     'actions' => ['clientQrcode'],
     'name' => 'SB',
@@ -52,12 +52,12 @@ Card::widget([
     'avatar' => '@webroot/avatar.jpg',
 ]);
 
-//SMS¶ÌÐÅ
+//SMSçŸ­ä¿¡
 Smsphone::widget([
     'actions' => ['clientQrcode'],
     'phone' => '131111111111',
 ]);
-//Tel´òµç»°
+//Telæ‰“ç”µè¯
 Telphone::widget([
     'actions' => ['clientQrcode'],
     'phone' => '131111111111',
@@ -65,51 +65,53 @@ Telphone::widget([
 
 ```
 
-WidgetÉú³ÉÇëÇóURL+IMG Í¨¹ýActionäÖÈ¾
+Widgetç”Ÿæˆè¯·æ±‚URL+IMG é€šè¿‡Actionæ¸²æŸ“
 ----
 Action:
 ----
 ```php
 public function actions() {
-    //deny widget set size & margin & ecLevel
-    'qrcode' => [
-        'class' => QRcodeAction::className(),
-        'enableCache' => false,
-        //
-        'allowClientEclevel' => false,
-        'ecLevel' => QRcode::QR_ECLEVEL_H,
-        //
-        'defaultSize' => 4,
-        'allowClientSize' => false,
-        //
-        'defaultMargin' => 2,
-        'allowClientMargin' => false,
-    ],
+    return [
+        //deny widget set size & margin & ecLevel
+        'qrcode' => [
+            'class' => QRcodeAction::className(),
+            'enableCache' => false,
+            //
+            'allowClientEclevel' => false,
+            'ecLevel' => QRcode::QR_ECLEVEL_H,
+            //
+            'defaultSize' => 4,
+            'allowClientSize' => false,
+            //
+            'defaultMargin' => 2,
+            'allowClientMargin' => false,
+        ],
 
-    //allow widget set size & margin & ecLevel
-    'qrcode' => [
-        'class' => QRcodeAction::className(),
-        //you can disable cache
-        'enableCache' => true,
-        //
-        'allowClientEclevel' => true,
-        'ecLevel' => QRcode::QR_ECLEVEL_H,
-        //
-        'defaultSize' => 4,
-        'allowClientSize' => true,
-        'maxSize' => 10,
-        //
-        'defaultMargin' => 2,
-        'allowClientMargin' => true,
-        'maxMargin' => 10,
-        'outputDir' => '@webroot/upload/qrcode',
+        //allow widget set size & margin & ecLevel
+        'qrcode' => [
+            'class' => QRcodeAction::className(),
+            //you can disable cache
+            'enableCache' => true,
+            //
+            'allowClientEclevel' => true,
+            'ecLevel' => QRcode::QR_ECLEVEL_H,
+            //
+            'defaultSize' => 4,
+            'allowClientSize' => true,
+            'maxSize' => 10,
+            //
+            'defaultMargin' => 2,
+            'allowClientMargin' => true,
+            'maxMargin' => 10,
+            'outputDir' => '@webroot/upload/qrcode',
 
-        //closure, you can ignore this selection.
-        'onGetFilename' => function (QRcodeAction $data) {
-            /* @var $data QRcodeAction */
-            //dosomething
-            return sha1($data->text) . '.png';
-        }
-    ],
+            //closure, you can ignore this selection.
+            'onGetFilename' => function (QRcodeAction $data) {
+                /* @var $data QRcodeAction */
+                //dosomething
+                return sha1($data->text) . '.png';
+            }
+        ]
+    ];
 }
 ```
